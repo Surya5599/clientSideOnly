@@ -7,7 +7,7 @@
 let closeHangouts = document.getElementById('closeIt');
 
 var socket;
-socket.io();
+socket = io();
 socket.on('link', newConnection);
 
 closeHangouts.onclick = function(element){
