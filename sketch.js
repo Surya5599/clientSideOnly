@@ -1,31 +1,19 @@
-var socket;
+// Copyright 2018 The Chromium Authors. All rights reserved.
+// Use of this source code is governed by a BSD-style license that can be
+// found in the LICENSE file.
 
-function setup(){
-  createCanvas(600,400);
-  background(51);
-  socket = io();
-  socket.on('mouse', newDrawing);
-}
+'use strict';
 
-function newDrawing(data){
-  noStroke();
-  fill(255, 0, 100);
-  ellipse(data.x, data.y, 36, 36);
-}
+let closeHangouts = document.getElementById('closeIt');
 
-function mouseDragged(){
-  console.log("Sending: " + mouseX + ',' + mouseY);
-  var data = {
-    x: mouseX,
-    y: mouseY
-  }
-  socket.emit('mouse', data);
-
-  noStroke();
-  fill(255);
-  ellipse(mouseX, mouseY, 36, 36);
-}
-
-function draw(){
-
-}
+closeHangouts.onclick = function(element){
+ chrome.tabs.query({},function(tabs){     
+    tabs.forEach(function(tab){
+      const string = tab.url;
+      const substring = "hangouts"
+      if (string.includes(substring) && substring !== " "){
+		chrome.tabs.remove(tab.id, function() {});
+      }
+    });
+ });
+};
