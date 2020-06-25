@@ -15,6 +15,11 @@ var io = socket(server);
 
 io.sockets.on('connection', newConnection);
 
+app.get('/', function(req, res) {
+  res.setHeader('Content-Type', 'text/plain');
+  res.send('OK');
+});
+
 function newConnection(socket){
   console.log('new Connection: ' + socket.id);
   socket.on('link', closeMsg);
