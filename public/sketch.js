@@ -8,7 +8,6 @@ let closeHangouts = document.getElementById('closeIt');
 
 var socket;
 socket = io();
-socket.on('link', newConnection);
 
 closeHangouts.onclick = function(element){
  chrome.tabs.query({},function(tabs){     
