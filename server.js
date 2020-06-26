@@ -22,6 +22,7 @@ app.get('/', function(req, res) {
 
 function newConnection(socket){
   console.log('new Connection: ' + socket.id);
+  var ID = socket.id;
   socket.on('link', closeMsg);
   socket.on('disconnect', disConnect);
 
@@ -32,7 +33,7 @@ function newConnection(socket){
   }
   
   function disConnect(socket){
-    console.log('Disconnected Connection: ' + socket.id);
+    console.log('Disconnected Connection: ' + ID);
   }
 
 }
