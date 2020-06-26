@@ -14,7 +14,7 @@ var socket = require('socket.io');
 var io = socket(server);
 
 io.sockets.on('connection', newConnection);
-io.sockets.on('disconnection', disConnect);
+io.sockets.on('disconnect', disConnect);
 
 app.get('/', function(req, res) {
   res.setHeader('Content-Type', 'text/plain');
