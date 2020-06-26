@@ -25,8 +25,8 @@ function newConnection(socket){
   socket.on('link', closeMsg);
 
   function closeMsg(string) {
-    socket.broadcast.emit('link', string);
-    //for all//io.sockets.emit('mouse', data);
+    //socket.broadcast.emit('link', string);
+    for all//io.sockets.emit('mouse', data);
     console.log(string);
   }
 }
