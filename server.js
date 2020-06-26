@@ -32,6 +32,6 @@ function newConnection(socket){
   }
 }
 
-function newConnection(socket){
+function disConnect(socket){
   console.log('Disconnected Connection: ' + socket.id);
 }
