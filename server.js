@@ -14,7 +14,6 @@ var socket = require('socket.io');
 var io = socket(server);
 
 io.sockets.on('connection', newConnection);
-io.sockets.on('disconnect', disConnect);
 
 app.get('/', function(req, res) {
   res.setHeader('Content-Type', 'text/plain');
@@ -24,14 +23,17 @@ app.get('/', function(req, res) {
 function newConnection(socket){
   console.log('new Connection: ' + socket.id);
   socket.on('link', closeMsg);
+  socket.on('disconnect', disConnect);
 
   function closeMsg(string) {
     //socket.broadcast.emit('link', string);
     io.sockets.emit('link', string);
     console.log(string);
   }
+  
+  function disConnect(socket){
+    console.log('Disconnected Connection: ' + socket.id);
+  }
+
 }
 
-function disConnect(socket){
-  console.log('Disconnected Connection: ' + socket.id);
-}
