@@ -19,8 +19,6 @@ function createId() {
   return Math.random().toString(36).substr(2, 9);
 }
 
-var ServerRooms = [];
-
 app.get('/', function(req, res) {
   res.setHeader('Content-Type', 'text/plain');
   res.send('OK');
@@ -37,22 +35,20 @@ function newConnection(socket){
   
   function createRoom(){
     var roomID = createId();
-    if(ServerRooms.includes(roomID)){
+    if(io.sockets.adapter.rooms[roomID] == true){
+      console.log("Room exists already");
       createRoom();
     }
     else{
-      ServerRooms.push(roomID);
       socket.join(roomID);
       console.log("Created and joined Room: " + roomID);
       io.sockets.in(roomID).emit('created', roomID);
     }
     console.log(ServerRooms);
-    var room = io.sockets.adapter.rooms[roomID];
-    console.log(room.length);
   }
   
   function joinRoom(roomID){
-    if(ServerRooms.includes(roomID)){
+    if(io.sockets.adapter.rooms[roomID] == true){
       socket.join(roomID);
       console.log("Joined existing room: " + roomID);
       io.sockets.in(roomID).emit('created', roomID);
@@ -75,30 +71,18 @@ function newConnection(socket){
     io.sockets.in(roomId).emit('left', roomId);
     console.log("Leaving Room: " + roomId); 
     socket.leave(roomId);
-    
-      var room = io.sockets.adapter.rooms[roomId];
-      console.log(room);
-    cleanRoom(roomId);
+    if(io.sockets.adapter.rooms[roomID] == true){
+      console.log("room is now empty");
+    }
+    else{
+      console.log("room not empty");
+    }
   }
  
   function disConnect(socket){
     console.log('Disconnected Connection: ' + ID);
   }
   
-  function cleanRoom(roomId){
-    if(io.sockets.adapter.rooms[roomId] == false){
-      console.log("Room " + roomId + " is empty. Clearing from list.");
-      ServerRooms = ServerRooms.filter(e => e !== roomId);
-      console.log(ServerRooms);
-      var room = io.sockets.adapter.rooms[roomId];
-      console.log(room.length);
-    }
-    else{
-      console.log("room " + roomId + " is not empty"); 
-      var room = io.sockets.adapter.rooms[roomId];
-      console.log(room);
-    }
-  }
 
 }
 
