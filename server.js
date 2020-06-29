@@ -68,9 +68,10 @@ function newConnection(socket){
     console.log("Room has " + room.length + " people");
   }
   
-  function closeMsg(roomId) {
-    io.sockets.in(roomId).emit('closed');
-    console.log("Closing Tabs in Room: " + roomId);
+  function closeMsg(data) {
+    console.log(data.message);
+    io.sockets.in(data.room).emit('closed', data.message);
+    console.log("Closing Tabs in Room: " + data.room);
   }
   
   function leaveRoom(roomId) {
