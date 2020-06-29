@@ -77,7 +77,7 @@ function newConnection(socket){
     socket.leave(roomId);
     
       var room = io.sockets.adapter.rooms[roomId];
-      console.log(room.length);
+      console.log(room);
     cleanRoom(roomId);
   }
  
@@ -96,7 +96,7 @@ function newConnection(socket){
     else{
       console.log("room " + roomId + " is not empty"); 
       var room = io.sockets.adapter.rooms[roomId];
-      console.log(room.length);
+      console.log(room);
     }
   }
 
