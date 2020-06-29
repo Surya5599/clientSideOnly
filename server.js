@@ -75,6 +75,9 @@ function newConnection(socket){
     io.sockets.in(roomId).emit('left', roomId);
     console.log("Leaving Room: " + roomId); 
     socket.leave(roomId);
+    
+      var room = io.sockets.adapter.rooms[roomId];
+      console.log(room.length);
     cleanRoom(roomId);
   }
  
