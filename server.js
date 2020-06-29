@@ -47,6 +47,8 @@ function newConnection(socket){
       io.sockets.in(roomID).emit('created', roomID);
     }
     console.log(ServerRooms);
+    var room = io.sockets.adapter.rooms[roomID];
+    console.log(room.length);
   }
   
   function joinRoom(roomID){
@@ -85,9 +87,13 @@ function newConnection(socket){
       console.log("Room " + roomId + " is empty. Clearing from list.");
       ServerRooms = ServerRooms.filter(e => e !== roomId);
       console.log(ServerRooms);
+      var room = io.sockets.adapter.rooms[roomId];
+      console.log(room.length);
     }
     else{
       console.log("room " + roomId + " is not empty"); 
+      var room = io.sockets.adapter.rooms[roomId];
+      console.log(room.length);
     }
   }
 
