@@ -29,9 +29,9 @@ app.get('/', function(req, res) {
 function newConnection(socket){
   console.log('new Connection: ' + socket.id);
   var ID = socket.id;
-  socket.on('close', closeMsg);
-  socket.on('leave', leaveRoom);
-  socket.on('join', joinRoom);
+//  socket.on('close', closeMsg);
+//  socket.on('leave', leaveRoom);
+//  socket.on('join', joinRoom);
   socket.on('create', createRoom);
   socket.on('disconnect', disConnect);
   
@@ -42,12 +42,12 @@ function newConnection(socket){
     socket.join(roomID);
     io.sockets.in(roomID).emit('created', roomID);
   }
-
+/*
   function closeMsg(string) {
     io.sockets.emit('link', string);
     console.log(string);
   }
-  
+ */ 
   function disConnect(socket){
     console.log('Disconnected Connection: ' + ID);
   }
