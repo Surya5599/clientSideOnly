@@ -50,7 +50,6 @@ function newConnection(socket){
   
   function joinRoom(roomID){
     if(ServerRooms.includes(roomID)){
-      ServerRooms.push(roomID);
       socket.join(roomID);
       console.log("joined existing room: " + roomID);
       io.sockets.in(roomID).emit('created', roomID);
