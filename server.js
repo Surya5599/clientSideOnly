@@ -71,12 +71,24 @@ function newConnection(socket){
   
   function leaveRoom(roomId) {
     io.sockets.in(roomId).emit('left', roomId);
-    console.log("Leaving Room: " + roomId);
+    console.log("Leaving Room: " + roomId); 
     socket.leave(roomId);
+    cleanRoom(roomID);
   }
  
   function disConnect(socket){
     console.log('Disconnected Connection: ' + ID);
+  }
+  
+  function cleanRoom(roomId){
+    if(socketio.sockets.adapter.rooms[roomId] == false){
+      console.log("Room " + roomId + " is empty. Clearing from list.");
+      ServerRooms = ServerRooms.filter(e => e !== roomId);
+      console.log(ServerRooms);
+    }
+    else{
+      console.log("room " + roomId + " is not empty"); 
+    }
   }
 
 }
