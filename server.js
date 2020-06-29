@@ -40,17 +40,17 @@ function newConnection(socket){
       createRoom();
     }
     else{
-      socket.join(roomId);
-      console.log("Created and joined Room: " + roomId);
-      io.sockets.in(roomId).emit('created', roomId);
+      console.log("Created room: " + roomId);
+      addToRoom(roomId);
     }
   }
   
+
+  
   function joinRoom(roomId){
     if(io.sockets.adapter.rooms[roomId] == true){
-      socket.join(roomId);
       console.log("Joined existing room: " + roomId);
-      io.sockets.in(roomId).emit('created', roomId);
+      addToRoom(roomId);
     }
     else{
       var newRoom = createId();
@@ -59,6 +59,13 @@ function newConnection(socket){
       io.sockets.in(newRoom).emit('badRoom');
       socket.leave(newRoom);
     }
+  }
+  
+  function addToRoom(roomId){
+    socket.join(roomId);
+    io.sockets.in(roomId).emit('created', roomId);
+    var room = io.sockets.adapter.rooms[roomId].length
+    console.log("Room has " + room.lenght + " people left");
   }
   
   function closeMsg(roomId) {
@@ -71,16 +78,15 @@ function newConnection(socket){
     console.log("Leaving Room: " + roomId); 
     socket.leave(roomId);
     if(io.sockets.adapter.rooms[roomId] == true){
-      console.log("room is now empty");
+      var room = io.sockets.adapter.rooms[roomId].length
+      console.log("Room has " + room.lenght + " people left");
     }
     else{
-      console.log("room not empty");
+      console.log("Everyone left the room");
     }
   }
  
   function disConnect(socket){
     console.log('Disconnected Connection: ' + ID);
   }
-  
-
 }
