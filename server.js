@@ -37,11 +37,11 @@ function newConnection(socket){
   
   function createRoom(){
     var roomID = createId();
-    console.log("createdRoom " + roomID);
     ServerRooms.push(roomID);
     socket.join(roomID);
-    console.log("joined room");
-   // io.sockets.in(roomID).emit('created', roomID);
+    
+    console.log("created and joined Room: " + roomID);
+    io.sockets.in(roomID).emit('created', roomID);
   }
 /*
   function closeMsg(string) {
