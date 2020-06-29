@@ -29,8 +29,8 @@ app.get('/', function(req, res) {
 function newConnection(socket){
   console.log('new Connection: ' + socket.id);
   var ID = socket.id;
-//  socket.on('close', closeMsg);
-//  socket.on('leave', leaveRoom);
+  socket.on('close', closeMsg);
+  socket.on('leave', leaveRoom);
   socket.on('join', joinRoom);
   socket.on('create', createRoom);
   socket.on('disconnect', disConnect);
@@ -60,14 +60,19 @@ function newConnection(socket){
       io.sockets.in(newRoom).emit('badRoom');
       socket.leave(newRoom);
     }
-    
   }
-/*
-  function closeMsg(string) {
-    io.sockets.emit('link', string);
-    console.log(string);
+  
+  function closeMsg(roomId) {
+    io.sockets.in(roomId).emit('closed');
+    console.log("Closing Tabs in Room: " + roomId);
   }
- */ 
+  
+  function leaveRoom(roomId) {
+    io.sockets.in(roomId).emit('left');
+    console.log("Leaving Room: " + roomId);
+    socket.leave(roomId);
+  }
+ 
   function disConnect(socket){
     console.log('Disconnected Connection: ' + ID);
   }
