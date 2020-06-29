@@ -81,7 +81,7 @@ function newConnection(socket){
   }
   
   function cleanRoom(roomId){
-    if(socketio.sockets.adapter.rooms[roomId] == false){
+    if(io.sockets.adapter.rooms[roomId] == false){
       console.log("Room " + roomId + " is empty. Clearing from list.");
       ServerRooms = ServerRooms.filter(e => e !== roomId);
       console.log(ServerRooms);
