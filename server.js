@@ -34,28 +34,28 @@ function newConnection(socket){
   socket.on('disconnect', disConnect);
   
   function createRoom(){
-    var roomID = createId();
-    if(io.sockets.adapter.rooms[roomID] == true){
+    var roomId = createId();
+    if(io.sockets.adapter.rooms[roomId] == true){
       console.log("Room exists already");
       createRoom();
     }
     else{
-      socket.join(roomID);
-      console.log("Created and joined Room: " + roomID);
-      io.sockets.in(roomID).emit('created', roomID);
+      socket.join(roomId);
+      console.log("Created and joined Room: " + roomId);
+      io.sockets.in(roomId).emit('created', roomId);
     }
   }
   
-  function joinRoom(roomID){
-    if(io.sockets.adapter.rooms[roomID] == true){
-      socket.join(roomID);
-      console.log("Joined existing room: " + roomID);
-      io.sockets.in(roomID).emit('created', roomID);
+  function joinRoom(roomId){
+    if(io.sockets.adapter.rooms[roomId] == true){
+      socket.join(roomId);
+      console.log("Joined existing room: " + roomId);
+      io.sockets.in(roomId).emit('created', roomId);
     }
     else{
       var newRoom = createId();
       socket.join(newRoom);
-      console.log("Bad Room: " + roomID);
+      console.log("Bad Room: " + roomId);
       io.sockets.in(newRoom).emit('badRoom');
       socket.leave(newRoom);
     }
@@ -70,7 +70,7 @@ function newConnection(socket){
     io.sockets.in(roomId).emit('left', roomId);
     console.log("Leaving Room: " + roomId); 
     socket.leave(roomId);
-    if(io.sockets.adapter.rooms[roomID] == true){
+    if(io.sockets.adapter.rooms[roomId] == true){
       console.log("room is now empty");
     }
     else{
@@ -84,4 +84,3 @@ function newConnection(socket){
   
 
 }
-
