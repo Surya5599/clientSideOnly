@@ -64,8 +64,8 @@ function newConnection(socket){
   function addToRoom(roomId){
     socket.join(roomId);
     io.sockets.in(roomId).emit('created', roomId);
-    var room = io.sockets.adapter.rooms[roomId].length
-    console.log("Room has " + room.lenght + " people left");
+    var room = io.sockets.adapter.rooms[roomId];
+    console.log("Room has " + room.length + " people");
   }
   
   function closeMsg(roomId) {
