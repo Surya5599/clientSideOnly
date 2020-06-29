@@ -44,7 +44,6 @@ function newConnection(socket){
       console.log("Created and joined Room: " + roomID);
       io.sockets.in(roomID).emit('created', roomID);
     }
-    console.log(ServerRooms);
   }
   
   function joinRoom(roomID){
