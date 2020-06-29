@@ -38,9 +38,9 @@ function newConnection(socket){
   function createRoom(){
     var roomID = createID();
     console.log("createdRoom " + roomID);
-    Rooms.push(roomID);
-    socket.join(roomID);
-    io.sockets.in(roomID).emit('created', roomID);
+   // Rooms.push(roomID);
+   // socket.join(roomID);
+   // io.sockets.in(roomID).emit('created', roomID);
   }
 /*
   function closeMsg(string) {
