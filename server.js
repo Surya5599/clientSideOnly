@@ -73,7 +73,7 @@ function newConnection(socket){
     io.sockets.in(roomId).emit('left', roomId);
     console.log("Leaving Room: " + roomId); 
     socket.leave(roomId);
-    cleanRoom(roomID);
+    cleanRoom(roomId);
   }
  
   function disConnect(socket){
