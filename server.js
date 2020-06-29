@@ -43,20 +43,22 @@ function newConnection(socket){
     else{
       ServerRooms.push(roomID);
       socket.join(roomID);
-      console.log("created and joined Room: " + roomID);
+      console.log("Created and joined Room: " + roomID);
       io.sockets.in(roomID).emit('created', roomID);
     }
+    console.log(ServerRooms);
   }
   
   function joinRoom(roomID){
     if(ServerRooms.includes(roomID)){
       socket.join(roomID);
-      console.log("joined existing room: " + roomID);
+      console.log("Joined existing room: " + roomID);
       io.sockets.in(roomID).emit('created', roomID);
     }
     else{
       var newRoom = createId();
       socket.join(newRoom);
+      console.log("Bad Room: " + roomID);
       io.sockets.in(newRoom).emit('badRoom');
       socket.leave(newRoom);
     }
@@ -68,7 +70,7 @@ function newConnection(socket){
   }
   
   function leaveRoom(roomId) {
-    io.sockets.in(roomId).emit('left');
+    io.sockets.in(roomId).emit('left', roomId);
     console.log("Leaving Room: " + roomId);
     socket.leave(roomId);
   }
