@@ -15,6 +15,12 @@ var io = socket(server);
 
 io.sockets.on('connection', newConnection);
 
+function createId() {
+  return Math.random().toString(36).substr(2, 9);
+}
+
+var ServerRooms = [];
+
 app.get('/', function(req, res) {
   res.setHeader('Content-Type', 'text/plain');
   res.send('OK');
@@ -23,11 +29,21 @@ app.get('/', function(req, res) {
 function newConnection(socket){
   console.log('new Connection: ' + socket.id);
   var ID = socket.id;
-  socket.on('link', closeMsg);
+  socket.on('close', closeMsg);
+  socket.on('leave', leaveRoom);
+  socket.on('join', joinRoom);
+  socket.on('create', createRoom);
   socket.on('disconnect', disConnect);
+  
+  function createRoom(){
+    var roomID = createID();
+    console.log("createdRoom " + roomID);
+    Rooms.push(roomID);
+    socket.join(roomID);
+    io.sockets.in(roomID).emit('created', roomID);
+  }
 
   function closeMsg(string) {
-    //socket.broadcast.emit('link', string);
     io.sockets.emit('link', string);
     console.log(string);
   }
