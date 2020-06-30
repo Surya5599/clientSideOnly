@@ -78,14 +78,15 @@ function newConnection(socket){
   function leaveRoom(roomId) {
     io.sockets.in(roomId).emit('left', roomId);
     console.log("Leaving Room: " + roomId); 
-    socket.leave(roomId);
-    if(io.sockets.adapter.rooms[roomId].length != "undefined"){
+     if(io.sockets.adapter.rooms[roomId].length == 1){
       var room = io.sockets.adapter.rooms[roomId].length
-      console.log("Room has " + room.length + " people left");
+      console.log("Room has " + room.length-1 + " people left");
     }
     else{
       console.log("Everyone left the room");
     }
+    socket.leave(roomId);
+
   }
  
   function disConnect(socket){
