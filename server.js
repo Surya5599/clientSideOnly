@@ -48,8 +48,8 @@ function newConnection(socket){
 
   
   function joinRoom(roomId){
-    console.log(io.sockets.adapter.rooms[roomId]);
-    if(io.sockets.adapter.rooms[roomId] == true){
+    console.log(io.sockets.adapter.rooms[roomId].lenght);
+    if(io.sockets.adapter.rooms[roomId].length > 0){
       console.log("Joined existing room: " + roomId);
       addToRoom(roomId);
     }
