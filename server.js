@@ -35,7 +35,7 @@ function newConnection(socket){
   
   function createRoom(){
     var roomId = createId();
-    if(io.sockets.adapter.rooms[roomId] == true){
+    if(io.sockets.adapter.rooms[roomId]){
       console.log("Room exists already");
       createRoom();
     }
@@ -49,10 +49,8 @@ function newConnection(socket){
   
   function joinRoom(roomId){
     if(io.sockets.adapter.rooms[roomId]){
-      if(io.sockets.adapter.rooms[roomId].length > 0){
         console.log("Joined existing room: " + roomId);
         addToRoom(roomId);
-      }
     }
     else{
       var newRoom = createId();
