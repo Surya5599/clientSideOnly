@@ -33,8 +33,11 @@ function newConnection(socket){
   socket.on('create', createRoom);
   socket.on('disconnect', disConnect);
   
-  function createRoom(){
+  function createRoom(data){
     var roomId = createId();
+    if(data == true){
+      roomId = roomId + "&";
+    }
     if(io.sockets.adapter.rooms[roomId]){
       console.log("Room exists already");
       createRoom();
@@ -50,7 +53,16 @@ function newConnection(socket){
   function joinRoom(roomId){
     if(io.sockets.adapter.rooms[roomId]){
         console.log("Joined existing room: " + roomId);
+      var lastChar = myString[myString.length -1];
+      if(roomId.charAt(roomId.length - 1) == "&"){
+          socket.join(roomId);
+          io.sockets.in(roomId).emit('joinLock', roomId);
+          var room = io.sockets.adapter.rooms[roomId];
+          console.log("Room has " + room.length + " people");
+       }
+       else{
         addToRoom(roomId);
+      }
     }
     else{
       var newRoom = createId();
