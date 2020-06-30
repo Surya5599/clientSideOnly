@@ -76,9 +76,14 @@ function newConnection(socket){
   
   function leaveRoom(roomId) {
     io.sockets.in(roomId).emit('left', roomId);
-    console.log("Leaving Room: " + roomId +  " size: " + io.sockets.adapter.rooms[roomId].length - 1); 
+    console.log("Leaving Room: " + roomId)
     socket.leave(roomId);
-
+    if(io.sockets.adapter.rooms[roomId]){
+        console.log("Room Size: " + io.sockets.adapter.rooms[roomId].length);
+    }
+    else{
+        console.log("room empty"); 
+    }
   }
  
   function disConnect(socket){
