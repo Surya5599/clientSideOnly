@@ -79,7 +79,7 @@ function newConnection(socket){
     io.sockets.in(roomId).emit('left', roomId);
     console.log("Leaving Room: " + roomId); 
     socket.leave(roomId);
-    if(io.sockets.adapter.rooms[roomId].length != undefined){
+    if(io.sockets.adapter.rooms[roomId].length != "undefined"){
       var room = io.sockets.adapter.rooms[roomId].length
       console.log("Room has " + room.length + " people left");
     }
