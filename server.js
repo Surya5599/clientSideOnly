@@ -28,6 +28,7 @@ function newConnection(socket){
   console.log('new Connection: ' + socket.id);
   var ID = socket.id;
   socket.on('close', closeMsg);
+  socket.on('closeOthers', closeMsgOther);
   socket.on('leave', leaveRoom);
   socket.on('join', joinRoom);
   socket.on('create', createRoom);
@@ -84,6 +85,12 @@ function newConnection(socket){
     console.log(data.message);
     io.sockets.in(data.room).emit('closed', data.message);
     console.log("Closing Tabs in Room: " + data.room);
+  }
+  
+  function closeMsgOther(data){
+    console.log(data.message);
+    socket.broadcast.to(data.room).emit('closed', data.message);
+    console.log("Closing Tabs for others in Room: " + data.room);
   }
   
   function leaveRoom(roomId) {
