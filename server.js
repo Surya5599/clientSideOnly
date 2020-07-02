@@ -102,7 +102,7 @@ function newConnection(socket){
     socket.leave(roomId);
     if(io.sockets.adapter.rooms[roomId]){
         console.log("Room Size: " + io.sockets.adapter.rooms[roomId].length);
-        io.sockets.in(roomId).emit('roomSize', room.length);
+        io.sockets.in(roomId).emit('roomSize', io.sockets.adapter.rooms[roomId].length);
     }
     else{
         console.log("room empty"); 
