@@ -60,6 +60,7 @@ function newConnection(socket){
           io.sockets.in(roomId).emit('joinLock', roomId);
           var room = io.sockets.adapter.rooms[roomId];
           console.log("Room has " + room.length + " people");
+          io.sockets.in(roomId).emit('roomSize', room.length);
        }
        else{
         addToRoom(roomId);
@@ -71,6 +72,7 @@ function newConnection(socket){
       console.log("Bad Room: " + roomId);
       io.sockets.in(newRoom).emit('badRoom');
       socket.leave(newRoom);
+      
     }
   }
   
@@ -79,6 +81,7 @@ function newConnection(socket){
     io.sockets.in(roomId).emit('created', roomId);
     var room = io.sockets.adapter.rooms[roomId];
     console.log("Room has " + room.length + " people");
+    io.sockets.in(roomId).emit('roomSize', room.length);
   }
   
   function closeMsg(data) {
