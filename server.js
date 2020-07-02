@@ -72,7 +72,7 @@ function newConnection(socket){
       console.log("Bad Room: " + roomId);
       io.sockets.in(newRoom).emit('badRoom');
       socket.leave(newRoom);
-      
+      socket.disconnect();
     }
   }
   
