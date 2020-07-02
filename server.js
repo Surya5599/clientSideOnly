@@ -107,6 +107,7 @@ function newConnection(socket){
     else{
         console.log("room empty"); 
     }
+    socket.disconnect();
   }
  
   function disConnect(socket){
